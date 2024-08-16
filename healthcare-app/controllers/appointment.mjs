@@ -2,6 +2,10 @@ import express from 'express';
 const router = express.Router();
 import Appointment from '../models/appointment.mjs';
 
+router.get('/new', (req,res)=>{
+    res.render('appoinments/New');
+});
+
 router.get('/', async (req, res) => {
     try {
         const appointments = await Appointment.find({})
@@ -18,7 +22,7 @@ router.get('/:id',async (req,res)=> {
         const appointment = await Appointment.findById(req.params.id)
         .populate('patient')
         .populate('doctor');
-        res.status(200).render('appointments/Show', {appointment});
+        res.status(200).render('Show', {appointment});
     } catch (err) {
         res.status(400).json({ error: err.message});
     }
